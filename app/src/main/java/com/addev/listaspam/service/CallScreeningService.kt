@@ -23,6 +23,13 @@ class CallScreeningService : CallScreeningService() {
         spamUtils.checkSpamNumber(this, null, details) { isSpam ->
             if (isSpam) {
                 endCall(details)
+            } else {
+                // Allow the call to proceed normally
+                respondToCall(
+                    details, CallResponse.Builder()
+                        .setDisallowCall(false)
+                        .build()
+                )
             }
         }
     }
