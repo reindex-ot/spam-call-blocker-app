@@ -157,7 +157,12 @@ class SpamUtils {
                 }
             }
 
-            val isNumberInAgenda = isNumberInAgenda(context, number)
+            // Check whitelist first - if whitelisted, always allow
+            if (isNumberWhitelisted(context, number)) {
+                return@launch
+            }
+
+            val isNumberInAgenda = isNumberInAgenda(context, details)
 
             // Don't check number if is in contacts
             if (isNumberInAgenda) {
@@ -335,44 +340,20 @@ class SpamUtils {
     private fun normalizePhoneNumber(number: String): String {
         return number.replace("\\D".toRegex(), "")
     }
-
+   
     /**
-     * Checks if the given number exists in the user's contact list.
-     * Ignores spaces and considers different number prefixes for comparison.
+     * Checks if a phone number exists in the device's contact agenda.
      *
-     * @param context The context of the caller.
-     * @param number The phone number to check.
-     * @return True if the number is in the user's contact list, false otherwise.
+     * This function determines whether a given phone number is associated with
+     * a contact stored in the user's address book by checking if the contact
+     * display name is available.
+     *
+     * @param details The call/message details object containing contact information
+     * @return true if the number is found in the agenda (has a contact display name),
+     *         false otherwise
      */
-    private fun isNumberInAgenda(context: Context, number: String): Boolean {
-        val contentResolver = context.contentResolver
-        val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
-        val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER)
-        val selection =
-            "${ContactsContract.CommonDataKinds.Phone.NUMBER} LIKE ? OR ${ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER} LIKE ?"
-        val normalizedNumber = normalizePhoneNumber(number)
-        val selectionArgs = arrayOf("%$normalizedNumber%", "%$normalizedNumber%")
-
-        var cursor: Cursor? = null
-        return try {
-            cursor = contentResolver.query(uri, projection, selection, selectionArgs, null)
-            cursor?.use {
-                val numberIndex =
-                    cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-                while (cursor.moveToNext()) {
-                    val contactNumber = normalizePhoneNumber(cursor.getString(numberIndex))
-                    if (normalizedNumber == contactNumber || normalizedNumber.endsWith(contactNumber) || contactNumber.endsWith(
-                            normalizedNumber
-                        )
-                    ) {
-                        return true
-                    }
-                }
-            }
-            false
-        } finally {
-            cursor?.close()
-        }
+    private fun isNumberInAgenda(details): Boolean {
+        return details.getContactDisplayName() != null
     }
 
     // ...scraper logic removed...
