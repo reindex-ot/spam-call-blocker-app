@@ -11,8 +11,6 @@ import android.os.Looper
 import android.provider.ContactsContract
 import android.telecom.Call
 import android.telecom.TelecomManager
-import android.telephony.SubscriptionManager
-import android.telephony.TelephonyManager
 import android.widget.Toast
 import androidx.annotation.RequiresPermission
 import androidx.core.app.ActivityCompat
@@ -27,12 +25,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.selects.onTimeout
 import kotlinx.coroutines.selects.select
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.jsoup.Jsoup
-import java.io.IOException
-import java.util.Locale
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.logging.Logger
 
@@ -61,7 +53,10 @@ class SpamUtils {
             details.intentExtras != null -> {
                 val uri =
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        details.intentExtras.getParcelable(TelecomManager.EXTRA_INCOMING_CALL_ADDRESS, Uri::class.java)
+                        details.intentExtras.getParcelable(
+                            TelecomManager.EXTRA_INCOMING_CALL_ADDRESS,
+                            Uri::class.java
+                        )
                     } else {
                         @Suppress("DEPRECATION")
                         details.intentExtras.getParcelable(TelecomManager.EXTRA_INCOMING_CALL_ADDRESS)
@@ -300,7 +295,7 @@ class SpamUtils {
                 val start = System.currentTimeMillis()
                 val result = runCatching { checker(number) }.getOrDefault(false)
                 val elapsed = System.currentTimeMillis() - start
-                
+
                 Logger.getLogger("SpamUtils").info(
                     "Spam checker for $number completed in ${elapsed}ms, result: $result"
                 )
@@ -363,12 +358,12 @@ class SpamUtils {
 
         return try {
             val parsedNumber = phoneNumberUtil.parse(phoneNumber, null) // Safe parsing
-            
+
             val simCountry = CountryLanguageUtils.getSimCountry(context).uppercase()
-            
+
             val countryCode = phoneNumberUtil.getCountryCodeForRegion(simCountry)
             parsedNumber.countryCode != countryCode // True if international
-            
+
         } catch (e: Exception) {
             e.printStackTrace()
             false
@@ -384,7 +379,7 @@ class SpamUtils {
     private fun normalizePhoneNumber(number: String): String {
         return number.replace("\\D".toRegex(), "")
     }
-   
+
     /**
      * Checks if a phone number exists in the device's contact agenda.
      *
@@ -408,7 +403,7 @@ class SpamUtils {
             ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
             Uri.encode(phoneNumber)
         )
-        
+
         var cursor: Cursor? = null
         try {
             cursor = context.contentResolver.query(
