@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Spam Call Blocker</string>
-    <string name="success_call_screening_role">ロールコールスクリーニングの要求に成功しました！</string>
-    <string name="failed_call_screening_role">ロールコールスクリーニングの要求に失敗しました</string>
+    <string name="success_call_screening_role">コールスクリーニングのロール要求に成功しました！</string>
+    <string name="failed_call_screening_role">コールスクリーニングのロール要求に失敗しました</string>
     <string name="telecom_manager_unavailable">Telecom Manager は利用できません。</string>
     <string name="call_screening_role_prompt">コールスクリーニングのロールを付与してください。</string>
     <string name="permissions_required_title">必要な権限</string>
@@ -15,7 +15,7 @@
     <string name="permission_post_notifications">通知の投稿</string>
     <string name="blocked_text_format">%1$s (ブロック済み)</string>
     <string name="whitelisted_text_format">%1$s (ホワイトリスト)</string>
-    <string name="duration_label">着信の経過時間: %1$d 秒</string>
+    <string name="duration_label">通話の経過時間: %1$d 秒</string>
     <string name="incoming_call_not_spam">着信はスパムではないようです</string>
     <string name="notification_channel_name">Spam Call Blocker</string>
     <string name="notification_title_spam_blocked">着信をブロック済み: %1$s</string>
