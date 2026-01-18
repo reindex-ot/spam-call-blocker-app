@@ -164,6 +164,16 @@ class SpamUtils {
                 return@launch
             }
 
+
+            // Check pattern whitelisting first - if matches exception, allow
+            if (isPatternWhitelistingEnabled(context)) {
+                val whitelistedPatterns = getWhitelistedPatterns(context)
+                if (whitelistedPatterns.any { matchesPattern(number, it) }) {
+                    callback(false)
+                    return@launch
+                }
+            }
+
             // End call if the number is already blocked
             if (blockedNumbers?.contains(number) == true) {
                 handleSpamNumber(

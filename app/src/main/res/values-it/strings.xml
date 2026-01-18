@@ -38,14 +38,42 @@
     <string name="pref_category_tellows_api">Tellows API 🌐</string>
     <string name="pref_category_truecaller_api">Truecaller API 🌐</string>
     <string name="pref_category_spam_filters">Filtri per i numeri di spam</string>
-    <string name="pref_category_pattern_blocking">" Blocco dei modelli"</string>
+    <string name="pref_category_pattern_blocking">Blocco dei modelli</string>
+    <string name="pref_category_pattern_whitelist">Elenco eccezioni pattern</string>
+    <string name="pref_category_number_list">Elenchi di numeri</string>
     <string name="pref_category_other_options">Altre opzioni di blocco</string>
     <string name="pref_category_notifications">Notifiche</string>
 
-    <!-- General Blocking Settings -->
+    <!-- Pattern Blocking Settings -->
+    <string name="pref_enable_pattern_blocking_title">Abilita il blocco dei pattern</string>
+    <string name="pref_enable_pattern_blocking_summary">Blocca le chiamate che corrispondono a specifici schemi numerici</string>
+    <string name="pref_pattern_list_title">Elenco modelli</string>
+    <string name="pref_pattern_list_summary">Inserisci i modelli da bloccare (uno per riga)</string>
+    <string name="pref_pattern_list_error">Pattern non valido. Utilizzare solo numeri, + e *.</string>
     <string name="pref_pattern_list_example">Ad esempio: +33162* (inizia con), *98 (termina con), 213*134 (inizia e finisce con), *123* (contiene 123 in qualsiasi punto intermedio). Non aggiungere il prefisso telefonico ai numeri del tuo Paese. Uno per riga.</string>
+
+    <!-- Pattern Exception List (Whitelist) Settings -->
+    <string name="pref_enable_pattern_whitelisting_title">Abilita l\'elenco delle eccezioni di pattern</string>
+    <string name="pref_enable_pattern_whitelisting_summary">Consenti le chiamate che corrispondono a pattern specifici anche se bloccate da altre regole</string>
+    <string name="pref_pattern_exception_list_title">Elenco eccezioni</string>
+    <string name="pref_pattern_exception_list_summary">Inserisci i pattern da consentire (uno per riga)</string>
+    <string name="pref_pattern_exception_list_error">Pattern non valido. Utilizzare solo numeri, + e *.</string>
+    <string name="pref_pattern_exception_list_example">Ad esempio: +33162* (inizia con), *98 (termina con), 213*134 (inizia e finisce con), *123* (contiene 123 in qualsiasi punto intermedio). Non aggiungere il prefisso telefonico ai numeri del tuo Paese. Uno per riga.</string>
+
+    <!-- General Blocking Settings -->
     <string name="pref_enable_blocking_title">Abilita blocco</string>
     <string name="pref_enable_blocking_summary">Abilita o disabilita la funzionalità di blocco delle chiamate</string>
+
+    <!-- Blocked and Whitelisted Numbers -->
+    <string name="pref_blocked_numbers_list_title">Numeri Bloccati</string>
+    <string name="pref_blocked_numbers_list_summary">Inserisci i numeri di telefono da bloccare (uno per riga)</string>
+    <string name="pref_blocked_numbers_list_error">Numero non valido. Utilizza solo cifre e +.</string>
+    <string name="pref_blocked_numbers_list_example">Es: +33612345678, 612345678. Uno per riga.</string>
+
+    <string name="pref_whitelisted_numbers_list_title">Numeri Consentiti</string>
+    <string name="pref_whitelisted_numbers_list_summary">Inserisci i numeri di telefono da consentire (uno per riga)</string>
+    <string name="pref_whitelisted_numbers_list_error">Numero non valido. Utilizza solo cifre e +.</string>
+    <string name="pref_whitelisted_numbers_list_example">Es: +33612345678, 612345678. Uno per riga.</string>
 
     <!-- API Unknownphone -->
     <string name="pref_filter_lista_spam_title">API Unknownphone</string>
@@ -163,9 +191,4 @@
     <string name="donation_help_development">Aiuta a supportare lo sviluppo e la manutenzione di questa app!</string>
     <string name="donation_traditional_methods">Supporta tramite metodi tradizionali:</string>
     <string name="donation_crypto_methods">Oppure, se preferisci, puoi donare con criptovalute:</string>
-    <string name="pref_enable_pattern_blocking_title">Abilita il blocco dei pattern</string>
-    <string name="pref_enable_pattern_blocking_summary">Blocca le chiamate che corrispondono a specifici schemi numerici</string>
-    <string name="pref_pattern_list_title">Elenco modelli</string>
-    <string name="pref_pattern_list_summary">Inserisci i modelli da bloccare (uno per riga)</string>
-    <string name="pref_pattern_list_error">Pattern non valido. Utilizzare solo numeri, + e *. I pattern non possono contenere **.</string>
 </resources>

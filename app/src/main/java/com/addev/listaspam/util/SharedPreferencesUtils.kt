@@ -85,6 +85,28 @@ fun setBlockedPatterns(context: Context, patterns: Set<String>) {
     setStringPref(context, "pref_pattern_list", patterns.joinToString("\n"))
 }
 
+fun isPatternWhitelistingEnabled(context: Context): Boolean =
+    getBooleanPref(context, "pref_enable_pattern_whitelisting", false)
+
+fun getWhitelistedPatterns(context: Context): Set<String> {
+    val patternsStr = getStringPref(context, "pref_pattern_exception_list") ?: ""
+    return patternsStr.split("\n")
+        .map { it.trim() }
+        .filter { it.isNotEmpty() }
+        .toSet()
+}
+
+fun setWhitelistedPatterns(context: Context, patterns: Set<String>) {
+    setStringPref(context, "pref_pattern_exception_list", patterns.joinToString("\n"))
+}
+
+/**
+ * Saves a phone number as spam in SharedPreferences by adding it to the blocked numbers set.
+ * Also removes the number from the whitelist if present.
+ *
+ * @param context The context for accessing resources.
+ * @param number The phone number to be saved as spam.
+ */
 /**
  * Saves a phone number as spam in SharedPreferences by adding it to the blocked numbers set.
  * Also removes the number from the whitelist if present.
@@ -96,16 +118,10 @@ fun saveSpamNumber(context: Context, number: String) {
     // Remove the number from the whitelist before adding it to the spam list
     removeWhitelistNumber(context, number)
 
-    // Get the SharedPreferences and update the blocked numbers set
-    val sharedPreferences = context.getSharedPreferences(SPAM_PREFS, Context.MODE_PRIVATE)
-    val blockedNumbers =
-        sharedPreferences.getStringSet(BLOCK_NUMBERS_KEY, mutableSetOf())?.toMutableSet()
-    blockedNumbers?.add(number)
-
-    // Save the updated blocked numbers set to SharedPreferences
-    sharedPreferences.edit {
-        putStringSet(BLOCK_NUMBERS_KEY, blockedNumbers)
-    }
+    // Get the blocked numbers and add the new number
+    val blockedNumbers = getBlockedNumbers(context).toMutableSet()
+    blockedNumbers.add(number)
+    setBlockedNumbers(context, blockedNumbers)
 }
 
 /**
@@ -115,16 +131,10 @@ fun saveSpamNumber(context: Context, number: String) {
  * @param number The phone number to be removed from the spam list.
  */
 fun removeSpamNumber(context: Context, number: String) {
-    // Get the SharedPreferences and update the blocked numbers set
-    val sharedPreferences = context.getSharedPreferences(SPAM_PREFS, Context.MODE_PRIVATE)
-    val blockedNumbers =
-        sharedPreferences.getStringSet(BLOCK_NUMBERS_KEY, mutableSetOf())?.toMutableSet()
-    blockedNumbers?.remove(number)
-
-    // Save the updated blocked numbers set to SharedPreferences
-    sharedPreferences.edit {
-        putStringSet(BLOCK_NUMBERS_KEY, blockedNumbers)
-    }
+    // Get the blocked numbers and remove the number
+    val blockedNumbers = getBlockedNumbers(context).toMutableSet()
+    blockedNumbers.remove(number)
+    setBlockedNumbers(context, blockedNumbers)
 }
 
 /**
@@ -138,16 +148,10 @@ fun addNumberToWhitelist(context: Context, number: String) {
     // Remove the number from the spam list before adding it to the whitelist
     removeSpamNumber(context, number)
 
-    // Get the SharedPreferences and update the whitelist numbers set
-    val sharedPreferences = context.getSharedPreferences(SPAM_PREFS, Context.MODE_PRIVATE)
-    val whitelistNumbers =
-        sharedPreferences.getStringSet(WHITELIST_NUMBERS_KEY, mutableSetOf())?.toMutableSet()
-    whitelistNumbers?.add(number)
-
-    // Save the updated whitelist numbers set to SharedPreferences
-    sharedPreferences.edit {
-        putStringSet(WHITELIST_NUMBERS_KEY, whitelistNumbers)
-    }
+    // Get the whitelist numbers and add the new number
+    val whitelistNumbers = getWhitelistNumbers(context).toMutableSet()
+    whitelistNumbers.add(number)
+    setWhitelistedNumbers(context, whitelistNumbers)
 }
 
 /**
@@ -157,26 +161,34 @@ fun addNumberToWhitelist(context: Context, number: String) {
  * @param number The phone number to be removed from the whitelist.
  */
 fun removeWhitelistNumber(context: Context, number: String) {
-    // Get the SharedPreferences and update the whitelist numbers set
-    val sharedPreferences = context.getSharedPreferences(SPAM_PREFS, Context.MODE_PRIVATE)
-    val whitelistNumbers =
-        sharedPreferences.getStringSet(WHITELIST_NUMBERS_KEY, mutableSetOf())?.toMutableSet()
-    whitelistNumbers?.remove(number)
-
-    // Save the updated whitelist numbers set to SharedPreferences
-    sharedPreferences.edit {
-        putStringSet(WHITELIST_NUMBERS_KEY, whitelistNumbers)
-    }
+    // Get the whitelist numbers and remove the number
+    val whitelistNumbers = getWhitelistNumbers(context).toMutableSet()
+    whitelistNumbers.remove(number)
+    setWhitelistedNumbers(context, whitelistNumbers)
 }
 
 fun getBlockedNumbers(context: Context): Set<String> {
-    val sharedPreferences = context.getSharedPreferences(SPAM_PREFS, Context.MODE_PRIVATE)
-    return sharedPreferences.getStringSet(BLOCK_NUMBERS_KEY, emptySet()) ?: emptySet()
+    val numbersStr = getStringPref(context, "pref_blocked_numbers_list") ?: ""
+    return numbersStr.split("\n")
+        .map { it.trim() }
+        .filter { it.isNotEmpty() }
+        .toSet()
+}
+
+fun setBlockedNumbers(context: Context, numbers: Set<String>) {
+    setStringPref(context, "pref_blocked_numbers_list", numbers.joinToString("\n"))
 }
 
 fun getWhitelistNumbers(context: Context): Set<String> {
-    val sharedPreferences = context.getSharedPreferences(SPAM_PREFS, Context.MODE_PRIVATE)
-    return sharedPreferences.getStringSet(WHITELIST_NUMBERS_KEY, emptySet()) ?: emptySet()
+    val numbersStr = getStringPref(context, "pref_whitelisted_numbers_list") ?: ""
+    return numbersStr.split("\n")
+        .map { it.trim() }
+        .filter { it.isNotEmpty() }
+        .toSet()
+}
+
+fun setWhitelistedNumbers(context: Context, numbers: Set<String>) {
+    setStringPref(context, "pref_whitelisted_numbers_list", numbers.joinToString("\n"))
 }
 
 /**
@@ -202,8 +214,7 @@ fun getWhitelistNumbers(context: Context): Set<String> {
  * @return True if the number is blocked locally, false otherwise.
  */
 fun isNumberBlocked(context: Context, number: String): Boolean {
-    val sharedPreferences = context.getSharedPreferences(SPAM_PREFS, Context.MODE_PRIVATE)
-    val blockedNumbers = sharedPreferences.getStringSet(BLOCK_NUMBERS_KEY, emptySet()) ?: emptySet()
+    val blockedNumbers = getBlockedNumbers(context)
     val normalizedNumber = number.replace("\\D".toRegex(), "")
 
     // Helper to get user's country prefix (e.g., "+33")
@@ -250,15 +261,9 @@ fun isNumberBlocked(context: Context, number: String): Boolean {
 }
 
 fun isNumberWhitelisted(context: Context, number: String): Boolean {
-    val sharedPreferences = context.getSharedPreferences(SPAM_PREFS, Context.MODE_PRIVATE)
-    val whitelistedNumbers = sharedPreferences.getStringSet(WHITELIST_NUMBERS_KEY, emptySet())
-    if (whitelistedNumbers != null) {
-        return whitelistedNumbers.contains(number)
-    }
-    return false
+    val whitelistedNumbers = getWhitelistNumbers(context)
+    return whitelistedNumbers.contains(number)
 }
 
 fun isUpdateCheckEnabled(context: Context): Boolean =
     getBooleanPref(context, "pref_enable_update_check", true)
-
-

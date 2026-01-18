@@ -39,6 +39,8 @@
     <string name="pref_category_truecaller_api">Truecaller API 🌐</string>
     <string name="pref_category_spam_filters">Spam Number Filters</string>
     <string name="pref_category_pattern_blocking">Pattern Blocking</string>
+    <string name="pref_category_pattern_whitelist">Pattern Whitelist</string>
+    <string name="pref_category_number_list">Number Lists</string>
     <string name="pref_category_other_options">Other Blocking Options</string>
     <string name="pref_category_notifications">Notifications</string>
 
@@ -47,8 +49,27 @@
     <string name="pref_enable_pattern_blocking_summary">Block calls matching specific number patterns</string>
     <string name="pref_pattern_list_title">Pattern List</string>
     <string name="pref_pattern_list_summary">Enter patterns to block (one per line)</string>
-    <string name="pref_pattern_list_error">Invalid pattern. Use only numbers, +, and *. Patterns cannot contain **.</string>
+    <string name="pref_pattern_list_error">Invalid pattern. Use only numbers, +, and *.</string>
     <string name="pref_pattern_list_example">E.g.: +33162* (starts with), *98 (ends with), 213*134 (starts and ends with), *123* (contains 123 anywhere in between). Don\'t add phone number prefix for numbers in your country. One per line.</string>
+
+    <!-- Pattern Exception List (Whitelist) Settings -->
+    <string name="pref_enable_pattern_whitelisting_title">Enable Pattern Exception List</string>
+    <string name="pref_enable_pattern_whitelisting_summary">Allow calls matching specific number patterns even if blocked by other rules</string>
+    <string name="pref_pattern_exception_list_title">Pattern Exception List</string>
+    <string name="pref_pattern_exception_list_summary">Enter patterns to allow (one per line)</string>
+    <string name="pref_pattern_exception_list_error">Invalid pattern. Use only numbers, +, and *.</string>
+    <string name="pref_pattern_exception_list_example">E.g.: +33162* (starts with), *98 (ends with), 213*134 (starts and ends with), *123* (contains 123 anywhere in between). Don\'t add phone number prefix for numbers in your country. One per line.</string>
+
+    <!-- Blocked and Whitelisted Numbers -->
+    <string name="pref_blocked_numbers_list_title">Blocked Numbers</string>
+    <string name="pref_blocked_numbers_list_summary">Enter phone numbers to block (one per line)</string>
+    <string name="pref_blocked_numbers_list_error">Invalid number. Use only digits and +.</string>
+    <string name="pref_blocked_numbers_list_example">E.g.: +33612345678, 612345678. One per line.</string>
+
+    <string name="pref_whitelisted_numbers_list_title">Whitelisted Numbers</string>
+    <string name="pref_whitelisted_numbers_list_summary">Enter phone numbers to allow (one per line)</string>
+    <string name="pref_whitelisted_numbers_list_error">Invalid number. Use only digits and +.</string>
+    <string name="pref_whitelisted_numbers_list_example">E.g.: +33612345678, 612345678. One per line.</string>
 
     <!-- General Blocking Settings -->
     <string name="pref_enable_blocking_title">Enable Blocking</string>

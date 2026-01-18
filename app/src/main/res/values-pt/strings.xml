@@ -39,13 +39,41 @@
     <string name="pref_category_truecaller_api">API Truecaller 🌐</string>
     <string name="pref_category_spam_filters">Filtros de Números Spam</string>
     <string name="pref_category_pattern_blocking">Bloqueio de padrão</string>
+    <string name="pref_category_pattern_whitelist">Lista de Exceções de Padrões</string>
+    <string name="pref_category_number_list">Listas de Números</string>
     <string name="pref_category_other_options">Outras Opções de Bloqueio</string>
     <string name="pref_category_notifications">Notificações</string>
 
-    <!-- General Blocking Settings -->
+    <!-- Pattern Blocking Settings -->
+    <string name="pref_enable_pattern_blocking_title">Ativar bloqueio de padrão</string>
+    <string name="pref_enable_pattern_blocking_summary">Bloquear chamadas que correspondam a padrões numéricos específicos</string>
+    <string name="pref_pattern_list_title">Lista de padrões</string>
+    <string name="pref_pattern_list_summary">Introduza padrões para bloquear (um por linha)</string>
+    <string name="pref_pattern_list_error">Padrão inválido. Utilize apenas números, + e *.</string>
     <string name="pref_pattern_list_example">Por exemplo: +33162* (começa por), *98 (termina por), 213*134 (começa e termina por), *123* (contém 123 em qualquer ponto intermédio). Não adicione o prefixo do número de telefone aos números do seu país. Um por linha.</string>
+
+    <!-- Pattern Exception List (Whitelist) Settings -->
+    <string name="pref_enable_pattern_whitelisting_title">Ativar lista de exceções de padrões</string>
+    <string name="pref_enable_pattern_whitelisting_summary">Permitir chamadas que correspondam a padrões específicos mesmo se bloqueadas por outras regras</string>
+    <string name="pref_pattern_exception_list_title">Lista de exceções</string>
+    <string name="pref_pattern_exception_list_summary">Introduza padrões para permitir (um por linha)</string>
+    <string name="pref_pattern_exception_list_error">Padrão inválido. Utilize apenas números, + e *.</string>
+    <string name="pref_pattern_exception_list_example">Por exemplo: +33162* (começa por), *98 (termina por), 213*134 (começa e termina por), *123* (contém 123 em qualquer ponto intermédio). Não adicione o prefixo do número de telefone aos números do seu país. Um por linha.</string>
+
+    <!-- General Blocking Settings -->
     <string name="pref_enable_blocking_title">Ativar Bloqueio</string>
     <string name="pref_enable_blocking_summary">Ativar ou desativar a funcionalidade de bloqueio de chamadas</string>
+
+    <!-- Blocked and Whitelisted Numbers -->
+    <string name="pref_blocked_numbers_list_title">Números Bloqueados</string>
+    <string name="pref_blocked_numbers_list_summary">Introduza números de telefone a bloquear (um por linha)</string>
+    <string name="pref_blocked_numbers_list_error">Número inválido. Use apenas dígitos e +.</string>
+    <string name="pref_blocked_numbers_list_example">Ex: +33612345678, 612345678. Um por linha.</string>
+
+    <string name="pref_whitelisted_numbers_list_title">Números Permitidos</string>
+    <string name="pref_whitelisted_numbers_list_summary">Introduza números de telefone a permitir (um por linha)</string>
+    <string name="pref_whitelisted_numbers_list_error">Número inválido. Use apenas dígitos e +.</string>
+    <string name="pref_whitelisted_numbers_list_example">Ex: +33612345678, 612345678. Um por linha.</string>
 
     <!-- API Unknownphone -->
     <string name="pref_filter_lista_spam_title">API Unknownphone</string>
@@ -66,7 +94,7 @@
     <string name="pref_filter_truecaller_api_country_summary">Selecione o país para pesquisas na API Truecaller (afeta os resultados)</string>
 
     <!-- Other Blocking Options -->
-    <string name="pref_block_non_contacts_title">Bloquear  os não Contatos</string>
+    <string name="pref_block_non_contacts_title">Bloquear os não Contatos</string>
     <string name="pref_block_non_contacts_summary">Bloquear chamadas de números não salvos nos contatos</string>
     <string name="pref_block_hidden_numbers_title">Bloquear Números Ocultos</string>
     <string name="pref_block_hidden_numbers_summary">Bloquear chamadas de números ocultos ou privados</string>
@@ -155,9 +183,4 @@
     <string name="donation_help_development">Ajude a apoiar o desenvolvimento e a manutenção deste aplicativo!</string>
     <string name="donation_traditional_methods">Apoie por métodos tradicionais:</string>
     <string name="donation_crypto_methods">Ou, se preferir, você pode doar com criptomoedas:</string>
-    <string name="pref_enable_pattern_blocking_title">Ativar bloqueio de padrão</string>
-    <string name="pref_enable_pattern_blocking_summary">Bloquear chamadas que correspondam a padrões numéricos específicos</string>
-    <string name="pref_pattern_list_title">Lista de padrões</string>
-    <string name="pref_pattern_list_summary">Introduza padrões para bloquear (um por linha)</string>
-    <string name="pref_pattern_list_error">Padrão inválido. Utilize apenas números, + e *. Os padrões não podem conter **.</string>
 </resources>

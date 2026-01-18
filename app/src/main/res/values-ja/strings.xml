@@ -37,6 +37,8 @@
     <string name="pref_category_truecaller_api">Truecaller API 🌐</string>
     <string name="pref_category_spam_filters">スパム電話番号のフィルタ</string>
     <string name="pref_category_pattern_blocking">パターンブロック</string>
+    <string name="pref_category_pattern_whitelist">パターン例外リスト</string>
+    <string name="pref_category_number_list">電話番号リスト</string>
     <string name="pref_category_other_options">その他のブロックオプション</string>
     <string name="pref_category_notifications">通知</string>
     <!-- Pattern Blocking Settings -->
@@ -44,11 +46,30 @@
     <string name="pref_enable_pattern_blocking_summary">特定のパターンに一致する電話番号からの着信をブロックします</string>
     <string name="pref_pattern_list_title">パターンリスト</string>
     <string name="pref_pattern_list_summary">ブロックするパターンを入力で設定します (一行ごと)</string>
-    <string name="pref_pattern_list_error">無効なパターンです。数字、「+」と「*」のみを使用してください。パターンに「**」を含めることはできません。</string>
+    <string name="pref_pattern_list_error">無効なパターンです。数字、「+」と「*」のみを使用してください。</string>
     <string name="pref_pattern_list_example">例: +33162* (先頭が始まる番号)、*98 (末尾が終わる番号)、213*134 (先頭の始まりと末尾の終わり)、*123* (123 を含む) など。お住まいの国の電話番号には、電話番号の接頭辞を追加しないでください。</string>
+
+    <!-- Pattern Exception List (Whitelist) Settings -->
+    <string name="pref_enable_pattern_whitelisting_title">パターン例外リストを有効化</string>
+    <string name="pref_enable_pattern_whitelisting_summary">他のルールでブロックされていても、特定のパターンに一致する着信を許可します</string>
+    <string name="pref_pattern_exception_list_title">例外リスト</string>
+    <string name="pref_pattern_exception_list_summary">許可するパターンを入力で設定します (一行ごと)</string>
+    <string name="pref_pattern_exception_list_error">無効なパターンです。数字、「+」と「*」のみを使用してください。</string>
+    <string name="pref_pattern_exception_list_example">例: +33162* (先頭が始まる番号)、*98 (末尾が終わる番号)、213*134 (先頭の始まりと末尾の終わり)、*123* (123 を含む) など。お住まいの国の電話番号には、電話番号の接頭辞を追加しないでください。</string>
+
     <!-- General Blocking Settings -->
     <string name="pref_enable_blocking_title">ブロックを有効化</string>
     <string name="pref_enable_blocking_summary">通話のブロック機能を有効化または無効化します</string>
+    <!-- Blocked and Whitelisted Numbers -->
+    <string name="pref_blocked_numbers_list_title">ブロック済み電話番号</string>
+    <string name="pref_blocked_numbers_list_summary">ブロックする電話番号を入力 (一行ごと)</string>
+    <string name="pref_blocked_numbers_list_error">無効な番号です。数字と「+」のみを使用してください。</string>
+    <string name="pref_blocked_numbers_list_example">例: +33612345678, 612345678。一行ごと。</string>
+
+    <string name="pref_whitelisted_numbers_list_title">許可する電話番号</string>
+    <string name="pref_whitelisted_numbers_list_summary">許可する電話番号を入力 (一行ごと)</string>
+    <string name="pref_whitelisted_numbers_list_error">無効な番号です。数字と「+」のみを使用してください。</string>
+    <string name="pref_whitelisted_numbers_list_example">例: +33612345678, 612345678。一行ごと。</string>
     <!-- API Unknownphone -->
     <string name="pref_filter_lista_spam_title">Unknownphone API</string>
     <string name="pref_filter_lista_spam_summary">(推奨) unknownphone.com API にリストされているスパムからの着信をブロックします</string>

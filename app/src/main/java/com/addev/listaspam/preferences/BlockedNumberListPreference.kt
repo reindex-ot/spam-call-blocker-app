@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import androidx.preference.EditTextPreference
 import com.addev.listaspam.R
 
-class PatternListPreference @JvmOverloads constructor(
+class BlockedNumberListPreference @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = androidx.preference.R.attr.editTextPreferenceStyle,
@@ -16,12 +16,11 @@ class PatternListPreference @JvmOverloads constructor(
         override fun validate(input: String): Boolean {
             val minLen = 2
             val maxLen = 20
-            val patterns = cleanInput(input)
-            if (patterns.isEmpty()) return false
-            for (pattern in patterns) {
-                if (pattern.length < minLen || pattern.length > maxLen) return false
-                if (!pattern.matches(Regex("^\\+?[0-9*]+$"))) return false
-                if (pattern.contains("**")) return false
+            val numbers = cleanInput(input)
+            if (numbers.isEmpty()) return false
+            for (number in numbers) {
+                if (number.length < minLen || number.length > maxLen) return false
+                if (!number.matches(Regex("^\\+?[0-9]+$"))) return false
             }
             return true
         }

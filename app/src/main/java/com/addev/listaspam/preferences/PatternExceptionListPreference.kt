@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import androidx.preference.EditTextPreference
 import com.addev.listaspam.R
 
-class PatternListPreference @JvmOverloads constructor(
+class PatternExceptionListPreference @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = androidx.preference.R.attr.editTextPreferenceStyle,
