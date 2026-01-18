@@ -1,0 +1,194 @@
+<resources>
+    <string name="app_name">Блокировщик Спам-Звонков</string>
+    <string name="success_call_screening_role">Успешно запрошена роль проверки звонков!</string>
+    <string name="failed_call_screening_role">Не удалось запросить роль проверки звонков</string>
+    <string name="telecom_manager_unavailable">Менеджер телекоммуникаций недоступен.</string>
+    <string name="call_screening_role_prompt">Пожалуйста, предоставьте роль проверки звонков.</string>
+    <string name="permissions_required_title">Требуются разрешения</string>
+    <string name="permissions_required_message">Для правильной работы приложения требуются следующие разрешения:\n\n%s\n\nПожалуйста, перейдите в системные настройки и предоставьте разрешения вручную.</string>
+    <string name="go_to_settings">Перейти к настройкам</string>
+    <string name="permission_read_call_log">Чтение журнала звонков</string>
+    <string name="permission_read_phone_state">Чтение состояния телефона</string>
+    <string name="permission_read_contacts">Чтение контактов</string>
+    <string name="permission_answer_phone_calls">Ответ на телефонные звонки</string>
+    <string name="permission_post_notifications">Отправка уведомлений</string>
+    <string name="blocked_text_format">%1$s (заблокирован)</string>
+    <string name="whitelisted_text_format">%1$s (в белом списке)</string>
+    <string name="duration_label">Длительность: %1$d секунд</string>
+    <string name="incoming_call_not_spam">Входящий звонок не является спамом</string>
+    <string name="notification_channel_name">Блокировщик Спам-Звонков</string>
+    <string name="notification_title_spam_blocked">Звонок заблокирован: %1$s</string>
+    <string name="number_copied_to_clipboard">Номер телефона скопирован в буфер обмена</string>
+
+    <!-- Call types -->
+    <string name="call_incoming">Входящий звонок</string>
+    <string name="call_missed">Пропущенный звонок</string>
+    <string name="call_rejected">Отклонённый звонок</string>
+    <string name="call_blocked">Заблокированный звонок</string>
+    <string name="call_unknown">Неизвестный</string>
+
+    <!-- Preferences -->
+    <string name="action_settings">Настройки</string>
+    <string name="about">О приложении</string>
+    <string name="donate">Пожертвовать</string>
+
+    <!-- Preferences Sections -->
+    <string name="pref_category_general_blocking">Общие</string>
+    <string name="pref_category_unknown_phone_api">API Unknownphone 🌐</string>
+    <string name="pref_category_tellows_api">API Tellows 🌐</string>
+    <string name="pref_category_truecaller_api">API Truecaller 🌐</string>
+    <string name="pref_category_spam_filters">Фильтры спам-номеров</string>
+    <string name="pref_category_pattern_blocking">Блокировка по шаблонам</string>
+    <string name="pref_category_pattern_whitelist">Белый список шаблонов</string>
+    <string name="pref_category_number_list">Списки номеров</string>
+    <string name="pref_category_other_options">Другие опции блокировки</string>
+    <string name="pref_category_notifications">Уведомления</string>
+
+    <!-- Pattern Blocking Settings -->
+    <string name="pref_enable_pattern_blocking_title">Включить блокировку по шаблонам</string>
+    <string name="pref_enable_pattern_blocking_summary">Блокировать звонки, соответствующие определённым шаблонам номеров</string>
+    <string name="pref_pattern_list_title">Список шаблонов</string>
+    <string name="pref_pattern_list_summary">Введите шаблоны для блокировки (по одному на строке)</string>
+    <string name="pref_pattern_list_error">Неверный шаблон. Используйте только цифры, + и *.</string>
+    <string name="pref_pattern_list_example">Например: +33162* (начинается с), *98 (заканчивается на), 213*134 (начинается и заканчивается), *123* (содержит 123 где угодно). Не добавляйте код страны для номеров в вашей стране. По одному на строке.</string>
+
+    <!-- Pattern Exception List (Whitelist) Settings -->
+    <string name="pref_enable_pattern_whitelisting_title">Включить список исключений шаблонов</string>
+    <string name="pref_enable_pattern_whitelisting_summary">Разрешить звонки, соответствующие определённым шаблонам, даже если они заблокированы другими правилами</string>
+    <string name="pref_pattern_exception_list_title">Список исключений</string>
+    <string name="pref_pattern_exception_list_summary">Введите шаблоны для разрешения (по одному на строке)</string>
+    <string name="pref_pattern_exception_list_error">Неверный шаблон. Используйте только цифры, + и *.</string>
+    <string name="pref_pattern_exception_list_example">Например: +33162* (начинается с), *98 (заканчивается на), 213*134 (начинается и заканчивается), *123* (содержит 123 где угодно). Не добавляйте код страны для номеров в вашей стране. По одному на строке.</string>
+
+    <!-- Blocked and Whitelisted Numbers -->
+    <string name="pref_blocked_numbers_list_title">Заблокированные номера</string>
+    <string name="pref_blocked_numbers_list_summary">Введите номера телефонов для блокировки (по одному на строке)</string>
+    <string name="pref_blocked_numbers_list_error">Неверный номер. Используйте только цифры и +.</string>
+    <string name="pref_blocked_numbers_list_example">Например: +33612345678, 612345678. По одному на строке.</string>
+
+    <string name="pref_whitelisted_numbers_list_title">Номера в белом списке</string>
+    <string name="pref_whitelisted_numbers_list_summary">Введите номера телефонов для разрешения (по одному на строке)</string>
+    <string name="pref_whitelisted_numbers_list_error">Неверный номер. Используйте только цифры и +.</string>
+    <string name="pref_whitelisted_numbers_list_example">Например: +33612345678, 612345678. По одному на строке.</string>
+
+    <!-- General Blocking Settings -->
+    <string name="pref_enable_blocking_title">Включить блокировку</string>
+    <string name="pref_enable_blocking_summary">Включить или выключить функцию блокировки звонков</string>
+
+    <!-- API Unknownphone -->
+    <string name="pref_filter_lista_spam_title">API Unknownphone</string>
+    <string name="pref_filter_lista_spam_summary">(Рекомендуется) Блокирует звонки от спам-номеров, перечисленных в API unknownphone.com</string>
+
+    <string name="pref_filter_lista_spam_api_language_title">Язык API unknownphone.com</string>
+    <string name="pref_filter_lista_spam_api_language_summary">Выберите язык для поиска в API unknownphone.com (влияет на результаты)</string>
+
+    <!-- API Tellows -->
+    <string name="pref_filter_tellows_title">API Tellows</string>
+    <string name="pref_filter_tellows_summary">(Рекомендуется) Блокирует звонки от спам-номеров, перечисленных в API Tellows</string>
+
+    <string name="pref_filter_tellows_api_country_title">Страна API Tellows</string>
+    <string name="pref_filter_tellows_api_country_summary">Выберите страну для поиска в API Tellows (влияет на результаты)</string>
+
+    <!-- API Truecaller -->
+    <string name="pref_filter_truecaller_title">API Truecaller</string>
+    <string name="pref_filter_truecaller_summary">(Рекомендуется) Блокирует звонки от спам-номеров, определённых API Truecaller</string>
+
+    <string name="pref_filter_truecaller_api_country_title">Страна API Truecaller</string>
+    <string name="pref_filter_truecaller_api_country_summary">Выберите страну для поиска в API Truecaller (влияет на результаты)</string>
+
+    <!-- Other Blocking Options -->
+    <string name="pref_block_non_contacts_title">Блокировать звонки от не контактов</string>
+    <string name="pref_block_non_contacts_summary">Блокировать звонки от номеров, не сохранённых в контактах</string>
+
+    <string name="pref_block_hidden_numbers_title">Блокировать скрытые номера</string>
+    <string name="pref_block_hidden_numbers_summary">Блокировать звонки от скрытых или частных номеров</string>
+
+    <string name="pref_block_international_numbers_title">Блокировать международные звонки</string>
+    <string name="pref_block_international_numbers_summary">Блокировать звонки из других стран</string>
+
+    <string name="pref_block_stir_shaken_risk_title">Проверка через STIR/SHAKEN</string>
+    <string name="pref_block_stir_shaken_risk_summary">Блокировать звонки, отмеченные как потенциально мошеннические системой STIR/SHAKEN (только Android 11+, доступно в некоторых странах и у операторов)</string>
+
+    <string name="pref_mute_instead_of_block_title">Беззвучно вместо блокировки</string>
+    <string name="pref_mute_instead_of_block_summary">Беззвучно принимать спам-звонки вместо полной блокировки</string>
+
+    <!-- Notifications -->
+    <string name="pref_show_notification_title">Показывать уведомление при блокировке</string>
+    <string name="pref_show_notification_summary">Отображать уведомление при блокировке звонка</string>
+
+    <!-- Call item actions  -->
+    <string name="open_in_lista_spam_com">Открыть в ListaSpam</string>
+    <string name="open_in_unknown_phone_com">Открыть в UnknownPhone</string>
+    <string name="search_in_google">Поиск в Google</string>
+    <string name="open_in_whatsapp">Открыть в WhatsApp</string>
+    <string name="add_to_contacts">Добавить в контакты</string>
+    <string name="block">Заблокировать</string>
+    <string name="add_to_whitelist">Добавить в белый список</string>
+    <string name="unblock">Разблокировать</string>
+    <string name="remove_from_whitelist">Удалить из белого списка</string>
+
+    <!-- SpamUtils blocking reasons -->
+    <string name="block_reason_long">Звонок заблокирован:</string>
+    <string name="block_reason">Причина:</string>
+    <string name="blocking_disabled">Блокировка звонков отключена в настройках</string>
+    <string name="block_stir_shaken_risk">STIR/SHAKEN - вероятно подделанный звонок</string>
+    <string name="block_hidden_number">Скрытый номер</string>
+    <string name="block_spam_number">Сообщено как спам</string>
+    <string name="block_international_call">Международный звонок</string>
+    <string name="block_pattern_match">Совпадение шаблона</string>
+    <string name="block_already_blocked_number">Заблокированный номер</string>
+    <string name="block_non_contact">Не в контактах</string>
+    <string name="export_config">Экспорт настроек и списков</string>
+    <string name="import_config">Импорт настроек и списков</string>
+    <string name="test_number">Тестовый номер</string>
+    <string name="aceptar">Принять</string>
+    <string name="cancelar">Отмена</string>
+    <string name="type_number">Пожалуйста, введите действительный номер</string>
+
+    <!-- Updates -->
+    <string name="update_available_title">Доступно обновление</string>
+    <string name="update_available_message">Доступна новая версия: %1$s\nХотите скачать её?</string>
+
+    <!-- Reports -->
+    <string name="report_title">Сообщить о номере</string>
+    <string name="report_label">Опишите причину</string>
+    <string name="report_hint">Краткое объяснение</string>
+    <string name="where_to_report">Куда вы хотите сообщить?</string>
+    <string name="report_spam">Это спам</string>
+    <string name="report_not_spam">Это НЕ спам</string>
+    <string name="accept">Отправить</string>
+    <string name="cancel">Отмена</string>
+    <string name="report_validation_message">Должно содержать минимум 2 слова и 5 букв.</string>
+    <string name="report_radio_validation">Пожалуйста, выберите, является ли это спамом или нет.</string>
+    <string name="report_success_prefix">Отчёт отправлен в</string>
+    <string name="and">и</string>
+    <string name="report_failure">Не удалось отправить отчёт</string>
+    <string name="select_at_least_one_provider">Выберите хотя бы одного провайдера</string>
+    <string name="reported_to_unknown_phone">UnknownPhone</string>
+    <string name="reported_to_tellows">Tellows</string>
+    <string name="reported_to_truecaller">TrueCaller</string>
+    <string name="truecaller_prefix_repository">TrueCaller (репозиторий префиксов %1$s)</string>
+    <string name="truecaller_default_repository">TrueCaller (репозиторий префиксов по умолчанию)</string>
+    <string name="provider_repository_format">%1$s (репозиторий %2$s)</string>
+    <string name="unknown_value">Неизвестно</string>
+
+
+    <!-- Import/export -->
+    <string name="preferences_import_success">Настройки успешно импортированы</string>
+    <string name="preferences_import_error">Ошибка импорта настроек</string>
+    <string name="invalid_json_file">JSON-файл недействителен</string>
+    <string name="preferences_export_success">Настройки успешно экспортированы</string>
+    <string name="preferences_export_error">Ошибка экспорта настроек</string>
+
+    <!-- Update check preference -->
+    <string name="pref_enable_update_check_title">Автоматически проверять обновления</string>
+    <string name="pref_enable_update_check_summary">Если отключено, приложение не будет автоматически проверять новые версии</string>
+
+    <!-- Donation Screen -->
+    <string name="donation_screen_title">Пожертвования</string>
+    <string name="copy_address">Копировать</string>
+    <string name="address_copied">Адрес скопирован</string>
+    <string name="donation_help_development">Помогите поддержать разработку и обслуживание этого приложения!</string>
+    <string name="donation_traditional_methods">Поддержка через традиционные методы:</string>
+    <string name="donation_crypto_methods">Или если предпочитаете, можете пожертвовать криптовалютами:</string>
+</resources>
