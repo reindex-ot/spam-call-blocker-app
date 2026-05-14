@@ -3,6 +3,7 @@
     <string name="success_call_screening_role">Success requesting role call screening!</string>
     <string name="failed_call_screening_role">Failed requesting role call screening</string>
     <string name="telecom_manager_unavailable">Telecom Manager is unavailable.</string>
+    <string name="call_screening_role_not_available">Call screening is not supported on this device.</string>
     <string name="call_screening_role_prompt">Please grant the call screening role.</string>
     <string name="permissions_required_title">Permissions Required</string>
     <string name="permissions_required_message">The following permissions are required for the app to function properly:\n\n%s\n\nPlease go to system settings and grant the permissions manually.</string>

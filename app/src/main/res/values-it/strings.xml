@@ -3,6 +3,7 @@
     <string name="success_call_screening_role">Richiesta di screening delle chiamate riuscita!</string>
     <string name="failed_call_screening_role">Richiesta di screening delle chiamate fallita</string>
     <string name="telecom_manager_unavailable">Gestore Telecom non disponibile.</string>
+    <string name="call_screening_role_not_available">Il filtraggio delle chiamate non è supportato su questo dispositivo.</string>
     <string name="call_screening_role_prompt">Per favore autorizza lo screening delle chiamate.</string>
     <string name="permissions_required_title">Autorizzazione Richiesta</string>
     <string name="permissions_required_message">Per il corretto funzionamento dell\'app sono necessarie le seguenti autorizzazioni:\n\n%s\n\nVai nelle impostazioni e attribuisci manualmente i permessi.</string>

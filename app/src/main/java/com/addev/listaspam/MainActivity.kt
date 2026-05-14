@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(), CallLogAdapter.OnItemChangedListener {
 
     private lateinit var intentLauncher: ActivityResultLauncher<Intent>
     private var permissionDeniedDialog: AlertDialog? = null
+    private var roleUnavailableToastShown = false
     private var callLogAdapter: CallLogAdapter? = null
     private var recyclerView: RecyclerView? = null
 
@@ -238,7 +239,21 @@ class MainActivity : AppCompatActivity(), CallLogAdapter.OnItemChangedListener {
      * Requests the call screening role.
      */
     private fun requestCallScreeningRole() {
-        val roleManager = getSystemService(ROLE_SERVICE) as RoleManager
+        val roleManager = getSystemService(ROLE_SERVICE) as? RoleManager
+        if (roleManager == null) {
+            if (!roleUnavailableToastShown) {
+                roleUnavailableToastShown = true
+                showToast(this, getString(R.string.telecom_manager_unavailable), Toast.LENGTH_LONG)
+            }
+            return
+        }
+        if (!roleManager.isRoleAvailable(RoleManager.ROLE_CALL_SCREENING)) {
+            if (!roleUnavailableToastShown) {
+                roleUnavailableToastShown = true
+                showToast(this, getString(R.string.call_screening_role_not_available), Toast.LENGTH_LONG)
+            }
+            return
+        }
         if (!roleManager.isRoleHeld(RoleManager.ROLE_CALL_SCREENING)) {
             val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_CALL_SCREENING)
             intentLauncher.launch(intent)

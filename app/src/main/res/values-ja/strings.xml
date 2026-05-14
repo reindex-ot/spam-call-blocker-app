@@ -4,6 +4,7 @@
     <string name="success_call_screening_role">コールスクリーニングのロール要求に成功しました！</string>
     <string name="failed_call_screening_role">コールスクリーニングのロール要求に失敗しました</string>
     <string name="telecom_manager_unavailable">Telecom Manager は利用できません。</string>
+    <string name="call_screening_role_not_available">このデバイスではコールスクリーニングはサポートされていません。</string>
     <string name="call_screening_role_prompt">コールスクリーニングのロールを付与してください。</string>
     <string name="permissions_required_title">必要な権限</string>
     <string name="permissions_required_message">アプリを正常に動作させるには以下の権限が必要です:\n\n%s\n\nシステム設定を開いて、権限を手動で付与してください。</string>

@@ -3,6 +3,7 @@
     <string name="success_call_screening_role">Успешно запрошена роль проверки звонков!</string>
     <string name="failed_call_screening_role">Не удалось запросить роль проверки звонков</string>
     <string name="telecom_manager_unavailable">Менеджер телекоммуникаций недоступен.</string>
+    <string name="call_screening_role_not_available">Фильтрация звонков не поддерживается на этом устройстве.</string>
     <string name="call_screening_role_prompt">Пожалуйста, предоставьте роль проверки звонков.</string>
     <string name="permissions_required_title">Требуются разрешения</string>
     <string name="permissions_required_message">Для правильной работы приложения требуются следующие разрешения:\n\n%s\n\nПожалуйста, перейдите в системные настройки и предоставьте разрешения вручную.</string>

@@ -3,6 +3,7 @@
     <string name="success_call_screening_role">¡Éxito al solicitar el rol de filtrado de llamadas!</string>
     <string name="failed_call_screening_role">Error al solicitar el rol de filtrado de llamadas</string>
     <string name="telecom_manager_unavailable">El Administrador de Telecomunicaciones no está disponible.</string>
+    <string name="call_screening_role_not_available">El filtrado de llamadas no está disponible en este dispositivo.</string>
     <string name="call_screening_role_prompt">Por favor, otorga el rol de filtrado de llamadas.</string>
     <string name="permissions_required_title">Permisos Requeridos</string>
     <string name="permissions_required_message">Los siguientes permisos son necesarios para que la aplicación funcione correctamente:\n\n%s\n\nPor favor, ve a los ajustes del sistema y otorga los permisos manualmente.</string>

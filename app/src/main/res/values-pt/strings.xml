@@ -3,6 +3,7 @@
     <string name="success_call_screening_role">Sucesso ao solicitar função de filtragem de chamadas!</string>
     <string name="failed_call_screening_role">Falha ao solicitar função de filtragem de chamadas</string>
     <string name="telecom_manager_unavailable">Gerenciador Telecom indisponível.</string>
+    <string name="call_screening_role_not_available">A filtragem de chamadas não é suportada neste dispositivo.</string>
     <string name="call_screening_role_prompt">Por favor, conceda a permissão de filtragem de chamadas.</string>
     <string name="permissions_required_title">Permissões Necessárias</string>
     <string name="permissions_required_message">As seguintes permissões são necessárias para o aplicativo funcionar corretamente:\n\n%s\n\nPor favor, vá às configurações do sistema e conceda as permissões manualmente.</string>
