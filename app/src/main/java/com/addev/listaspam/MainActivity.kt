@@ -73,9 +73,7 @@ class MainActivity : AppCompatActivity(), CallLogAdapter.OnItemChangedListener {
         if (isUpdateCheckEnabled(this)) {
             checkUpdates()
         }
-        if (getUnknownPhoneApiKey(this) == null) {
-            Thread { ApiUtils.fetchAndStoreApiKey(this) }.start()
-        }
+        Thread { ApiUtils.fetchAndStoreApiKey(this) }.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

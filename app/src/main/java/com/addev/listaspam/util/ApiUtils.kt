@@ -12,6 +12,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Locale
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 import javax.xml.parsers.DocumentBuilderFactory
 
@@ -40,21 +41,30 @@ object ApiUtils {
 
     private val client = OkHttpClient()
 
-    private fun getApiKey(context: Context): String =
-        getUnknownPhoneApiKey(context) ?: UNKNOWN_PHONE_API_KEY_FALLBACK
+    private fun getApiKey(context: Context): String {
+        fetchAndStoreApiKey(context)
+        return getUnknownPhoneApiKey(context) ?: UNKNOWN_PHONE_API_KEY_FALLBACK
+    }
 
     fun fetchAndStoreApiKey(context: Context) {
+        if (getUnknownPhoneApiKey(context) != null) return
+        fetchApiKey(context, Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
+    }
+
+    fun renewApiKey(context: Context): Boolean {
+        clearUnknownPhoneApiKey(context)
+        return fetchApiKey(context, UUID.randomUUID().toString())
+    }
+
+    private fun fetchApiKey(context: Context, userId: String): Boolean {
         val fetchClient = OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .build()
 
-        val userId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-        val osVersion = Build.VERSION.SDK_INT
-
         val body = FormBody.Builder()
-            .add("os_version", osVersion.toString())
+            .add("os_version", Build.VERSION.SDK_INT.toString())
             .add("user_id", userId)
             .add("_action", "_get_new_api_key")
             .add("device", "Android")
@@ -66,14 +76,16 @@ object ApiUtils {
             .post(body)
             .build()
 
-        try {
+        return try {
             fetchClient.newCall(request).execute().use { response ->
-                if (!response.isSuccessful) return
-                val json = JSONObject(response.body?.string() ?: return)
-                val apiKey = json.optString("api_key").takeIf { it.isNotBlank() } ?: return
+                if (!response.isSuccessful) return false
+                val json = JSONObject(response.body?.string() ?: return false)
+                val apiKey = json.optString("api_key").takeIf { it.isNotBlank() } ?: return false
                 setUnknownPhoneApiKey(context, apiKey)
+                true
             }
         } catch (_: Exception) {
+            false
         }
     }
 

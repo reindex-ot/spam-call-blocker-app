@@ -82,7 +82,10 @@
 
     <string name="pref_filter_lista_spam_api_language_title">Lingua unknownphone.com API</string>
     <string name="pref_filter_lista_spam_api_language_summary">Scegli il Paese in cui effettuare le ricerche nell\'API unknownphone.com (influisce sui risultati)</string>
-
+    <string name="pref_renew_api_key_title">Rinnova Chiave API</string>
+    <string name="pref_renew_api_key_summary">Richiedi una nuova chiave API di unknownphone.com. Utilizza solo se le richieste API stanno fallendo. Abusare di questa opzione potrebbe comportare un divieto da Unknownphone.</string>
+    <string name="pref_renew_api_key_success">Chiave API rinnovata con successo</string>
+    <string name="pref_renew_api_key_failure">Impossibile rinnovare la chiave API</string>
     <!-- API Tellows -->
     <string name="pref_filter_tellows_title">Tellows API</string>
     <string name="pref_filter_tellows_summary">(Consigliato) Blocca le chiamate dai numeri spam elencati nell\'API di Tellows</string>

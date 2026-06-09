@@ -83,6 +83,11 @@
     <string name="pref_filter_lista_spam_api_language_title">Язык API unknownphone.com</string>
     <string name="pref_filter_lista_spam_api_language_summary">Выберите язык для поиска в API unknownphone.com (влияет на результаты)</string>
 
+    <string name="pref_renew_api_key_title">Обновить ключ API</string>
+    <string name="pref_renew_api_key_summary">Запросите новый ключ API unknownphone.com. Используйте только если API запросы работают неправильно. Злоупотребление этой функцией может привести к блокировке на Unknownphone.</string>
+    <string name="pref_renew_api_key_success">Ключ API успешно обновлен</string>
+    <string name="pref_renew_api_key_failure">Не удалось обновить ключ API</string>
+
     <!-- API Tellows -->
     <string name="pref_filter_tellows_title">API Tellows</string>
     <string name="pref_filter_tellows_summary">(Рекомендуется) Блокирует звонки от спам-номеров, перечисленных в API Tellows</string>

@@ -12,6 +12,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.addev.listaspam.preferences.BaseListManagerDialogFragment
 import com.addev.listaspam.preferences.BaseListManagerPreference
+import com.addev.listaspam.util.ApiUtils
 import com.addev.listaspam.util.BLOCK_NUMBERS_KEY
 import com.addev.listaspam.util.SPAM_PREFS
 import com.addev.listaspam.util.WHITELIST_NUMBERS_KEY
@@ -59,6 +60,17 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.preferences, rootKey)
+
+            findPreference<Preference>("pref_renew_api_key")?.setOnPreferenceClickListener {
+                Thread {
+                    val success = ApiUtils.renewApiKey(requireContext())
+                    requireActivity().runOnUiThread {
+                        val msg = if (success) R.string.pref_renew_api_key_success else R.string.pref_renew_api_key_failure
+                        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+                    }
+                }.start()
+                true
+            }
         }
 
         override fun onDisplayPreferenceDialog(preference: Preference) {

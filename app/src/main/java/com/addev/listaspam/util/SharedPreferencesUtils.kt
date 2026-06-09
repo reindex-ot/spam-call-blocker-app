@@ -283,3 +283,6 @@ fun getUnknownPhoneApiKey(context: Context): String? =
 
 fun setUnknownPhoneApiKey(context: Context, apiKey: String) =
     setStringPref(context, "pref_unknown_phone_api_key", apiKey)
+
+fun clearUnknownPhoneApiKey(context: Context) =
+    getPrefs(context).edit { remove("pref_unknown_phone_api_key") }

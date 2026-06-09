@@ -96,6 +96,11 @@
     <string name="pref_filter_lista_spam_api_language_title">unknownphone.com API Language</string>
     <string name="pref_filter_lista_spam_api_language_summary">Select the language for searches in the unknownphone.com API (affects results)</string>
 
+    <string name="pref_renew_api_key_title">Renew API Key</string>
+    <string name="pref_renew_api_key_summary">Request a new unknownphone.com API key. Only use if API requests are failing. Abusing this option may result in a ban from Unknownphone.</string>
+    <string name="pref_renew_api_key_success">API key renewed successfully</string>
+    <string name="pref_renew_api_key_failure">Failed to renew API key</string>
+
     <!-- API Tellows -->
     <string name="pref_filter_tellows_title">Tellows API</string>
     <string name="pref_filter_tellows_summary">(Recommended) Blocks calls from spam numbers listed in the Tellows API</string>

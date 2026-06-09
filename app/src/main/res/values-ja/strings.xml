@@ -76,6 +76,10 @@
     <string name="pref_filter_lista_spam_summary">(推奨) unknownphone.com API にリストされているスパムからの着信をブロックします</string>
     <string name="pref_filter_lista_spam_api_language_title">unknownphone.com API の言語</string>
     <string name="pref_filter_lista_spam_api_language_summary">unknownphone.com API で検索する言語を選択してください (結果に影響)</string>
+    <string name="pref_renew_api_key_title">API キーを更新</string>
+    <string name="pref_renew_api_key_summary">unknownphone.com の新しい API キーをリクエストしてください。API リクエストが失敗している場合のみを使用してください。このオプションを乱用するとUnknownphone からのバンの対象になる場合があります。</string>
+    <string name="pref_renew_api_key_success">API キーが正常に更新されました</string>
+    <string name="pref_renew_api_key_failure">API キーの更新に失敗しました</string>
     <!-- API Tellows -->
     <string name="pref_filter_tellows_title">Tellows API</string>
     <string name="pref_filter_tellows_summary">(推奨) Tellows API にリストされているスパムからの着信をブロックします</string>

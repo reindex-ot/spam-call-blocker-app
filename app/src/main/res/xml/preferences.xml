@@ -36,6 +36,12 @@
             android:title="@string/pref_filter_lista_spam_api_language_title"
             app:iconSpaceReserved="false" />
 
+        <Preference
+            android:key="pref_renew_api_key"
+            android:summary="@string/pref_renew_api_key_summary"
+            android:title="@string/pref_renew_api_key_title"
+            app:iconSpaceReserved="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
