@@ -96,7 +96,6 @@
             android:key="pref_pattern_list"
             android:summary="@string/pref_pattern_list_summary"
             android:title="@string/pref_pattern_list_title"
-            android:dialogMessage="@string/pref_pattern_list_example"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
@@ -117,7 +116,6 @@
             android:key="pref_pattern_exception_list"
             android:summary="@string/pref_pattern_exception_list_summary"
             android:title="@string/pref_pattern_exception_list_title"
-            android:dialogMessage="@string/pref_pattern_exception_list_example"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
@@ -131,14 +129,12 @@
             android:key="pref_blocked_numbers_list"
             android:summary="@string/pref_blocked_numbers_list_summary"
             android:title="@string/pref_blocked_numbers_list_title"
-            android:dialogMessage="@string/pref_blocked_numbers_list_example"
             app:iconSpaceReserved="false" />
 
         <com.addev.listaspam.preferences.WhitelistedNumberListPreference
             android:key="pref_whitelisted_numbers_list"
             android:summary="@string/pref_whitelisted_numbers_list_summary"
             android:title="@string/pref_whitelisted_numbers_list_title"
-            android:dialogMessage="@string/pref_whitelisted_numbers_list_example"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>

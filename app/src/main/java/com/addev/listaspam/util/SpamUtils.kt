@@ -26,7 +26,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.selects.onTimeout
 import kotlinx.coroutines.selects.select
 import java.util.concurrent.atomic.AtomicInteger
-import java.util.logging.Logger
 
 /**
  * Utility class for handling spam number checks and notifications.
@@ -34,8 +33,6 @@ import java.util.logging.Logger
 class SpamUtils {
 
     companion object {
-        private const val SPAM_PREFS = "SPAM_PREFS"
-
         object VerificationStatus {
             const val FAILED = 2
         }
@@ -139,9 +136,6 @@ class SpamUtils {
 
             val number = if (details != null) getRawPhoneNumber(details) else phoneNumber;
 
-            val sharedPreferences = context.getSharedPreferences(SPAM_PREFS, Context.MODE_PRIVATE)
-            val blockedNumbers = sharedPreferences.getStringSet(BLOCK_NUMBERS_KEY, null)
-
             if (number.isNullOrBlank()) {
                 if (shouldBlockHiddenNumbers(context)) {
                     handleSpamNumber(
@@ -175,7 +169,7 @@ class SpamUtils {
             }
 
             // End call if the number is already blocked
-            if (blockedNumbers?.contains(number) == true) {
+            if (isNumberBlocked(context, number)) {
                 handleSpamNumber(
                     context,
                     number,
@@ -335,7 +329,7 @@ class SpamUtils {
         val listaSpamApi = shouldFilterWithListaSpamApi(context)
         if (listaSpamApi) {
             spamCheckers.add { number ->
-                ApiUtils.checkListaSpamApi(number, getListaSpamApiLang(context) ?: "EN")
+                ApiUtils.checkListaSpamApi(context, number, getListaSpamApiLang(context) ?: "EN")
             }
         }
         val tellowsApi = shouldFilterWithTellowsApi(context)

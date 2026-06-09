@@ -2,15 +2,20 @@ package com.addev.listaspam.preferences
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.preference.EditTextPreference
 import com.addev.listaspam.R
+import com.addev.listaspam.util.getWhitelistNumbers
+import com.addev.listaspam.util.setWhitelistedNumbers
 
 class WhitelistedNumberListPreference @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = androidx.preference.R.attr.editTextPreferenceStyle,
+    defStyleAttr: Int = androidx.preference.R.attr.dialogPreferenceStyle,
     defStyleRes: Int = 0
-) : BaseEditTextPreference(context, attrs, defStyleAttr, defStyleRes) {
+) : BaseListManagerPreference(context, attrs, defStyleAttr, defStyleRes) {
+
+    init {
+        isPersistent = false
+    }
 
     override val validator = object : BaseListValidator() {
         override fun validate(input: String): Boolean {
@@ -26,5 +31,13 @@ class WhitelistedNumberListPreference @JvmOverloads constructor(
         }
     }
 
-    override val errorMessageResId = R.string.pref_pattern_exception_list_error
+    override val errorMessageResId = R.string.pref_whitelisted_numbers_list_error
+    override val hintResId = R.string.pref_whitelisted_numbers_list_hint
+
+    override fun getEntries(): List<String> = getWhitelistNumbers(context).toList().sorted()
+
+    override fun saveEntries(entries: List<String>) {
+        setWhitelistedNumbers(context, entries.toSet())
+        summary = buildSummary(entries)
+    }
 }

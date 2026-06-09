@@ -10,7 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.addev.listaspam.preferences.PatternListPreference
+import com.addev.listaspam.preferences.BaseListManagerDialogFragment
+import com.addev.listaspam.preferences.BaseListManagerPreference
+import com.addev.listaspam.util.BLOCK_NUMBERS_KEY
+import com.addev.listaspam.util.SPAM_PREFS
+import com.addev.listaspam.util.WHITELIST_NUMBERS_KEY
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -55,6 +59,16 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.preferences, rootKey)
+        }
+
+        override fun onDisplayPreferenceDialog(preference: Preference) {
+            if (preference is BaseListManagerPreference) {
+                val fragment = BaseListManagerDialogFragment.newInstance(preference.key)
+                fragment.setTargetFragment(this, 0)
+                fragment.show(parentFragmentManager, "list_manager_dialog")
+            } else {
+                super.onDisplayPreferenceDialog(preference)
+            }
         }
     }
 
@@ -152,17 +166,27 @@ class SettingsActivity : AppCompatActivity() {
                 val sharedPreferences = getSharedPreferences(prefName, Context.MODE_PRIVATE)
                 val allEntries: Map<String, *> = sharedPreferences.all
 
-                val prefJsonObject = JSONObject()
+                val booleans = JSONObject()
+                val strings = JSONObject()
+                val lists = JSONObject()
                 for ((key, value) in allEntries) {
-                    when (value) {
-                        is Set<*> -> {
-                            val jsonArray = JSONArray(value)
-                            prefJsonObject.put(key, jsonArray)
+                    when {
+                        value is Boolean -> booleans.put(key, value)
+                        value is Set<*> -> lists.put(key, JSONArray(value))
+                        value is String && value.startsWith("[") -> {
+                            try {
+                                lists.put(key, JSONArray(value))
+                            } catch (_: Exception) {
+                                strings.put(key, value)
+                            }
                         }
-
-                        else -> prefJsonObject.put(key, value)
+                        else -> strings.put(key, value)
                     }
                 }
+                val prefJsonObject = JSONObject()
+                for (k in booleans.keys()) prefJsonObject.put(k, booleans.get(k))
+                for (k in strings.keys()) prefJsonObject.put(k, strings.get(k))
+                for (k in lists.keys()) prefJsonObject.put(k, lists.get(k))
 
                 jsonObject.put(prefName, prefJsonObject)
             }
@@ -211,23 +235,23 @@ class SettingsActivity : AppCompatActivity() {
                 for (prefName in jsonObject.keys()) {
                     val sharedPreferences = getSharedPreferences(prefName, Context.MODE_PRIVATE)
                     sharedPreferences.edit {
-
                         val prefJsonObject = jsonObject.getJSONObject(prefName)
                         for (key in prefJsonObject.keys()) {
                             when (val value = prefJsonObject.get(key)) {
                                 is JSONArray -> {
-                                    val set = mutableSetOf<String>()
-                                    for (i in 0 until value.length()) {
-                                        set.add(value.getString(i))
+                                    if (prefName == SPAM_PREFS) {
+                                        val set = (0 until value.length()).map { value.getString(it) }.toSet()
+                                        putStringSet(key, set)
+                                    } else {
+                                        putString(key, value.toString())
                                     }
-                                    putStringSet(key, set)
                                 }
-
                                 is Int -> putInt(key, value)
                                 is Long -> putLong(key, value)
                                 is Float -> putFloat(key, value)
                                 is Boolean -> putBoolean(key, value)
                                 is String -> putString(key, value)
+                                JSONObject.NULL -> { /* omitir claves con valor null */ }
                             }
                         }
                     }
@@ -284,6 +308,10 @@ class SettingsActivity : AppCompatActivity() {
 
                         is Int, is Long, is Float, is Boolean, is String -> {
                             // Tipos válidos, no hacer nada
+                        }
+
+                        JSONObject.NULL -> {
+                            // Valor nulo: se ignora al importar
                         }
 
                         else -> {

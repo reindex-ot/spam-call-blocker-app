@@ -35,9 +35,11 @@ import com.addev.listaspam.util.setListaSpamApiLang
 import com.addev.listaspam.util.setTellowsApiCountry
 import com.addev.listaspam.util.getTruecallerApiCountry
 import com.addev.listaspam.util.setTruecallerApiCountry
+import com.addev.listaspam.util.getUnknownPhoneApiKey
 import com.addev.listaspam.util.isUpdateCheckEnabled
 import java.util.Locale
 import androidx.core.net.toUri
+import com.addev.listaspam.util.ApiUtils
 import com.addev.listaspam.util.CountryLanguageUtils
 
 class MainActivity : AppCompatActivity(), CallLogAdapter.OnItemChangedListener {
@@ -70,6 +72,9 @@ class MainActivity : AppCompatActivity(), CallLogAdapter.OnItemChangedListener {
         CountryLanguageUtils.setTruecallerCountry(this)
         if (isUpdateCheckEnabled(this)) {
             checkUpdates()
+        }
+        if (getUnknownPhoneApiKey(this) == null) {
+            Thread { ApiUtils.fetchAndStoreApiKey(this) }.start()
         }
     }
 

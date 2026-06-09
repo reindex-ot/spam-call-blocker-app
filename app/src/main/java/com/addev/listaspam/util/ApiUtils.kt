@@ -1,5 +1,8 @@
 package com.addev.listaspam.util
 
+import android.content.Context
+import android.os.Build
+import android.provider.Settings
 import okhttp3.FormBody
 import okhttp3.HttpUrl
 import okhttp3.MediaType.Companion.toMediaType
@@ -9,6 +12,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 import javax.xml.parsers.DocumentBuilderFactory
 
 /**
@@ -16,7 +20,7 @@ import javax.xml.parsers.DocumentBuilderFactory
  */
 object ApiUtils {
     private const val UNKNOWN_PHONE_API_URL = "https://secure.unknownphone.com/api2/"
-    private const val UNKNOWN_PHONE_API_KEY = "d7e07fec659645b12df76c94e378d47a"
+    private const val UNKNOWN_PHONE_API_KEY_FALLBACK = "d7e07fec659645b12df76c94e378d47a"
 
     private const val TELLOWS_API_URL = "www.tellows.de"
     private const val TELLOWS_API_KEY = "koE5hjkOwbHnmcADqZuqqq2"
@@ -36,6 +40,43 @@ object ApiUtils {
 
     private val client = OkHttpClient()
 
+    private fun getApiKey(context: Context): String =
+        getUnknownPhoneApiKey(context) ?: UNKNOWN_PHONE_API_KEY_FALLBACK
+
+    fun fetchAndStoreApiKey(context: Context) {
+        val fetchClient = OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
+
+        val userId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+        val osVersion = Build.VERSION.SDK_INT
+
+        val body = FormBody.Builder()
+            .add("os_version", osVersion.toString())
+            .add("user_id", userId)
+            .add("_action", "_get_new_api_key")
+            .add("device", "Android")
+            .build()
+
+        val request = Request.Builder()
+            .url(UNKNOWN_PHONE_API_URL)
+            .addHeader("User-Agent", "okhttp/3.14.9")
+            .post(body)
+            .build()
+
+        try {
+            fetchClient.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) return
+                val json = JSONObject(response.body?.string() ?: return)
+                val apiKey = json.optString("api_key").takeIf { it.isNotBlank() } ?: return
+                setUnknownPhoneApiKey(context, apiKey)
+            }
+        } catch (_: Exception) {
+        }
+    }
+
     /**
      * Sends a POST request to the UnknownPhone API to retrieve information about the given phone number.
      *
@@ -45,10 +86,10 @@ object ApiUtils {
      * @param number The phone number to check, in international format.
      * @return `true` if the number has an average rating lower than 3 (i.e., bad or dangerous), otherwise `false`.
      */
-    fun checkListaSpamApi(number: String, lang: String): Boolean {
+    fun checkListaSpamApi(context: Context, number: String, lang: String): Boolean {
         val formBody = FormBody.Builder()
             .add("user_type", "free")
-            .add("api_key", UNKNOWN_PHONE_API_KEY)
+            .add("api_key", getApiKey(context))
             .add("phone", number)
             .add("_action", "_get_info_for_phone")
             .add("lang", lang)
@@ -96,6 +137,7 @@ object ApiUtils {
      * @return `true` if the report was submitted successfully; `false` otherwise.
      */
     fun reportToUnknownPhone(
+        context: Context,
         phone: String,
         comment: String,
         isSpam: Boolean,
@@ -104,7 +146,7 @@ object ApiUtils {
         val optRating = if (isSpam) "1" else "5"
 
         val formBuilder = FormBody.Builder()
-            .add("api_key", UNKNOWN_PHONE_API_KEY)
+            .add("api_key", getApiKey(context))
             .add("phone", phone)
             .add("_action", "_submit_comment")
             .add("comment", comment)

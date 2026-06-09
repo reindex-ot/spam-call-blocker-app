@@ -147,7 +147,7 @@ class ReportDialogManager(private val context: Context) {
 
             if (checkboxUnknownPhone.isChecked) {
                 getListaSpamApiLang(context)?.let { lang ->
-                    if (ApiUtils.reportToUnknownPhone(number, message, isSpam, lang)) {
+                    if (ApiUtils.reportToUnknownPhone(context, number, message, isSpam, lang)) {
                         reportedTo.add("UnknownPhone")
                     }
                 }

@@ -2,15 +2,14 @@ package com.addev.listaspam.preferences
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.preference.EditTextPreference
 import com.addev.listaspam.R
 
 class PatternListPreference @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = androidx.preference.R.attr.editTextPreferenceStyle,
+    defStyleAttr: Int = androidx.preference.R.attr.dialogPreferenceStyle,
     defStyleRes: Int = 0
-) : BaseEditTextPreference(context, attrs, defStyleAttr, defStyleRes) {
+) : BaseListManagerPreference(context, attrs, defStyleAttr, defStyleRes) {
 
     override val validator = object : BaseListValidator() {
         override fun validate(input: String): Boolean {
@@ -27,5 +26,6 @@ class PatternListPreference @JvmOverloads constructor(
         }
     }
 
-    override val errorMessageResId = R.string.pref_pattern_exception_list_error
+    override val errorMessageResId = R.string.pref_pattern_list_error
+    override val hintResId = R.string.pref_pattern_list_hint
 }
