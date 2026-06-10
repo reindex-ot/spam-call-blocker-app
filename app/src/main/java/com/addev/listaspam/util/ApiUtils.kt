@@ -168,7 +168,7 @@ object ApiUtils {
             .build()
 
         try {
-            client.newCall(request).execute() { }
+            client.newCall(request).execute().close()
         } catch (_: Exception) {}
     }
 
