@@ -286,3 +286,12 @@ fun setUnknownPhoneApiKey(context: Context, apiKey: String) =
 
 fun clearUnknownPhoneApiKey(context: Context) =
     getPrefs(context).edit { remove("pref_unknown_phone_api_key") }
+
+fun isNumberInDangerousList(context: Context, number: String): Boolean {
+    val normalized = number.replace("\\D".toRegex(), "")
+    val dao = com.addev.listaspam.db.AppDatabase.getInstance(context).dangerousPhoneDao()
+    return dao.exists(normalized) || dao.getAllNumbers().any { entry ->
+        entry.replace("\\D".toRegex(), "") == normalized
+    }
+}
+

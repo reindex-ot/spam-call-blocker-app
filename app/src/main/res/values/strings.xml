@@ -101,6 +101,11 @@
     <string name="pref_renew_api_key_success">API key renewed successfully</string>
     <string name="pref_renew_api_key_failure">Failed to renew API key</string>
 
+    <string name="pref_update_dangerous_list_title">Update Dangerous Numbers List</string>
+    <string name="pref_update_dangerous_list_summary">Manually refresh the local dangerous numbers database from unknownphone.com. Updated automatically every day at 2 AM.</string>
+    <string name="pref_update_dangerous_list_success">Dangerous numbers list updated</string>
+    <string name="pref_update_dangerous_list_failure">Failed to update dangerous numbers list</string>
+
     <!-- API Tellows -->
     <string name="pref_filter_tellows_title">Tellows API</string>
     <string name="pref_filter_tellows_summary">(Recommended) Blocks calls from spam numbers listed in the Tellows API</string>

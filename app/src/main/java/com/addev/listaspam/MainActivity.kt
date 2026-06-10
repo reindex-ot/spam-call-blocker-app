@@ -41,6 +41,7 @@ import java.util.Locale
 import androidx.core.net.toUri
 import com.addev.listaspam.util.ApiUtils
 import com.addev.listaspam.util.CountryLanguageUtils
+import com.addev.listaspam.worker.DangerousPhonesWorker
 
 class MainActivity : AppCompatActivity(), CallLogAdapter.OnItemChangedListener {
 
@@ -74,6 +75,7 @@ class MainActivity : AppCompatActivity(), CallLogAdapter.OnItemChangedListener {
             checkUpdates()
         }
         Thread { ApiUtils.fetchAndStoreApiKey(this) }.start()
+        DangerousPhonesWorker.schedule(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

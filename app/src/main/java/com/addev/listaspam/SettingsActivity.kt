@@ -71,6 +71,25 @@ class SettingsActivity : AppCompatActivity() {
                 }.start()
                 true
             }
+
+            findPreference<Preference>("pref_update_dangerous_list")?.setOnPreferenceClickListener {
+                val pref = it
+                pref.isEnabled = false
+                Thread {
+                    ApiUtils.refreshDangerousPhonesList(requireContext())
+                    requireActivity().runOnUiThread {
+                        Toast.makeText(requireContext(), R.string.pref_update_dangerous_list_success, Toast.LENGTH_SHORT).show()
+                        pref.isEnabled = true
+                    }
+                }.start()
+                true
+            }
+
+            findPreference<androidx.preference.ListPreference>("pref_language")
+                ?.setOnPreferenceChangeListener { _, _ ->
+                    Thread { ApiUtils.refreshDangerousPhonesList(requireContext()) }.start()
+                    true
+                }
         }
 
         override fun onDisplayPreferenceDialog(preference: Preference) {

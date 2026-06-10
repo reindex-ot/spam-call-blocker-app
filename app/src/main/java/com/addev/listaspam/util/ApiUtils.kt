@@ -3,6 +3,8 @@ package com.addev.listaspam.util
 import android.content.Context
 import android.os.Build
 import android.provider.Settings
+import com.addev.listaspam.db.AppDatabase
+import com.addev.listaspam.db.DangerousPhone
 import okhttp3.FormBody
 import okhttp3.HttpUrl
 import okhttp3.MediaType.Companion.toMediaType
@@ -16,12 +18,15 @@ import java.util.UUID
 import java.util.concurrent.TimeUnit
 import javax.xml.parsers.DocumentBuilderFactory
 
+
 /**
  * Utility object for interacting with the UnknownPhone API to check if a phone number is marked as spam.
  */
 object ApiUtils {
     private const val UNKNOWN_PHONE_API_URL = "https://secure.unknownphone.com/api2/"
     private const val UNKNOWN_PHONE_API_KEY_FALLBACK = "d7e07fec659645b12df76c94e378d47a"
+    private const val UNKNOWN_PHONE_APP_VERSION = "3.4.3"
+    private const val UNKNOWN_PHONE_APP_BUILD = "607"
 
     private const val TELLOWS_API_URL = "www.tellows.de"
     private const val TELLOWS_API_KEY = "koE5hjkOwbHnmcADqZuqqq2"
@@ -46,14 +51,165 @@ object ApiUtils {
         return getUnknownPhoneApiKey(context) ?: UNKNOWN_PHONE_API_KEY_FALLBACK
     }
 
+    /**
+     * Fetches and stores a new API key from the UnknownPhone server.
+     * 
+     * This method automatically calls launchOnboardingRequests() after obtaining the API key.
+     * The three onboarding requests (updateDangerousPhonesList, fetchNameCallLog, and fetchSystemInfo)
+     * must be executed to prevent the API key from being flagged as invalid by the UnknownPhone server.
+     * These requests are handled internally by this method, so no additional calls are needed.
+     *
+     * @param context The application context.
+     */
     fun fetchAndStoreApiKey(context: Context) {
         if (getUnknownPhoneApiKey(context) != null) return
         fetchApiKey(context, Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID))
+        launchOnboardingRequests(context)
+    }
+
+    private fun launchOnboardingRequests(context: Context) {
+        val lang = getListaSpamApiLang(context) ?: Locale.getDefault().country.uppercase()
+        val apiKey = getUnknownPhoneApiKey(context) ?: return
+        Thread { updateDangerousPhonesList(context, apiKey, lang, "onboarding") }.start()
+        Thread { fetchNameCallLog(context, apiKey, lang) }.start()
+        Thread { fetchSystemInfo(context, apiKey, lang) }.start()
+    }
+
+    fun refreshDangerousPhonesList(context: Context) {
+        val lang = getListaSpamApiLang(context) ?: Locale.getDefault().country.uppercase()
+        val apiKey = getUnknownPhoneApiKey(context) ?: return
+        Thread { updateDangerousPhonesList(context, apiKey, lang, "manual") }.start()
+    }
+
+    /**
+     * Fetches and updates the list of dangerous phone numbers from the UnknownPhone API.
+     * 
+     * This method retrieves a list of known spam and dangerous phone numbers based on the user's
+     * language and region settings, and stores them in the local database for offline consultation.
+     * This is part of the onboarding process and should be called via launchOnboardingRequests().
+     *
+     * @param context The application context.
+     * @param apiKey The API key for authentication with the UnknownPhone service.
+     * @param lang The language code for the request (e.g., "ES" for Spanish).
+     * @param syncTrigger The trigger for this sync operation (e.g., "onboarding", "manual").
+     */
+    fun updateDangerousPhonesList(context: Context, apiKey: String, lang: String, syncTrigger: String) {
+        val body = FormBody.Builder()
+            .add("_action", "_get_dangerous_phones_list")
+            .add("api_key", apiKey)
+            .add("region", Locale.getDefault().country.uppercase())
+            .add("lang", lang)
+            .add("user_type", "free")
+            .add("device", "Android")
+            .add("country_code", Locale.getDefault().country.uppercase())
+            .add("os_version", Build.VERSION.SDK_INT.toString())
+            .add("sync_trigger", syncTrigger)
+            .build()
+
+        val request = Request.Builder()
+            .url(UNKNOWN_PHONE_API_URL)
+            .addHeader("User-Agent", "okhttp/3.14.9")
+            .post(body)
+            .build()
+
+        try {
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) return
+                val arr = JSONArray(response.body?.string() ?: return)
+                val phones = mutableListOf<DangerousPhone>()
+                for (i in 0 until arr.length()) {
+                    val obj = arr.getJSONObject(i)
+                    val phone = obj.optString("phone").takeIf { it.isNotBlank() } ?: continue
+                    phones.add(DangerousPhone(phone))
+                }
+                val dao = AppDatabase.getInstance(context).dangerousPhoneDao()
+                dao.deleteAll()
+                if (phones.isNotEmpty()) dao.insertAll(phones)
+            }
+        } catch (_: Exception) {}
+    }
+
+    /**
+     * Sends the device's call log to the UnknownPhone API for processing.
+     * 
+     * This method retrieves up to 30 phone numbers from the device's call history and sends them
+     * to the UnknownPhone server for analysis and enrichment. This is part of the onboarding process
+     * and helps the server maintain information about the user's contacts and calling patterns.
+     * This request is essential for proper API key validation.
+     *
+     * @param context The application context.
+     * @param apiKey The API key for authentication with the UnknownPhone service.
+     * @param lang The language code for the request (e.g., "ES" for Spanish).
+     */
+    private fun fetchNameCallLog(context: Context, apiKey: String, lang: String) {
+        val numbers = try {
+            getCallLogs(context)
+                .map { it.number }
+                .filter { it.isNotBlank() }
+                .distinct()
+                .take(30)
+        } catch (_: Exception) { return }
+
+        if (numbers.isEmpty()) return
+
+        val bodyBuilder = FormBody.Builder()
+            .add("_action", "_name_call_log")
+            .add("api_key", apiKey)
+            .add("lang", lang)
+            .add("app_version", UNKNOWN_PHONE_APP_VERSION)
+            .add("app_build", UNKNOWN_PHONE_APP_BUILD)
+            .add("os_version", Build.VERSION.SDK_INT.toString())
+        numbers.forEachIndexed { i, num -> bodyBuilder.add("phone_numbers[$i]", num) }
+
+        val request = Request.Builder()
+            .url(UNKNOWN_PHONE_API_URL)
+            .addHeader("User-Agent", "okhttp/3.14.9")
+            .post(bodyBuilder.build())
+            .build()
+
+        try {
+            client.newCall(request).execute() { }
+        } catch (_: Exception) {}
+    }
+
+    /**
+     * Sends system information to the UnknownPhone API.
+     * 
+     * This method gathers and transmits device and system information to the UnknownPhone server
+     * for analytics and validation purposes. This is part of the onboarding process and is required
+     * to prevent the API key from being flagged as invalid by the server.
+     *
+     * @param context The application context.
+     * @param apiKey The API key for authentication with the UnknownPhone service.
+     * @param lang The language code for the request (e.g., "ES" for Spanish).
+     */
+    private fun fetchSystemInfo(context: Context, apiKey: String, lang: String) {
+        val body = FormBody.Builder()
+            .add("_action", "_get_system_info")
+            .add("api_key", apiKey)
+            .add("lang", lang)
+            .build()
+
+        val request = Request.Builder()
+            .url(UNKNOWN_PHONE_API_URL)
+            .addHeader("User-Agent", "okhttp/3.14.9")
+            .post(body)
+            .build()
+
+        try {
+            client.newCall(request).execute().use { }
+        } catch (_: Exception) {}
     }
 
     fun renewApiKey(context: Context): Boolean {
         clearUnknownPhoneApiKey(context)
-        return fetchApiKey(context, UUID.randomUUID().toString())
+        val success = fetchApiKey(context, UUID.randomUUID().toString())
+        if (success) {
+            val lang = getListaSpamApiLang(context) ?: Locale.getDefault().country.uppercase()
+            val apiKey = getUnknownPhoneApiKey(context) ?: return success
+            launchOnboardingRequests(context)
+        }
+        return success
     }
 
     private fun fetchApiKey(context: Context, userId: String): Boolean {
@@ -105,6 +261,9 @@ object ApiUtils {
             .add("phone", number)
             .add("_action", "_get_info_for_phone")
             .add("lang", lang)
+            .add("app_version", UNKNOWN_PHONE_APP_VERSION)
+            .add("app_build", UNKNOWN_PHONE_APP_BUILD)
+            .add("os_version", Build.VERSION.SDK_INT.toString())
             .build()
 
         val request = Request.Builder()
