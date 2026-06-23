@@ -1,5 +1,7 @@
 # Spam Call Blocker
 
+**Language:** **English** | [日本語](./README_ja-JP.md)
+
 Spam Call Blocker is a Kotlin-powered tool that empowers you to block unwanted calls using a combination of real-time API checks with multi-country support, and other methods for effective call filtering.
 
 ## Screenshots
