@@ -1,6 +1,6 @@
 # Spam Call Blocker
 
-**Language:** [English]((./README.md) | **日本語**
+**Language:** [English](./README.md) | **日本語**
 
 Spam Call Blocker は Kotlin で海発されたアプリで、リアルタイムな API のチェックと複数の国に対応、その他の効果的な通話フィルタリングの手法を組み合わせることで、迷惑電話をブロックできます。
 
