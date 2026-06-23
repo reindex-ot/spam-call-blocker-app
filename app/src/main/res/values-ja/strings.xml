@@ -17,14 +17,14 @@
     <string name="blocked_text_format">%1$s (ブロック済み)</string>
     <string name="whitelisted_text_format">%1$s (ホワイトリスト)</string>
     <string name="duration_label">着信の経過時間: %1$d 秒</string>
-    <string name="incoming_call_not_spam">着信はスパムではないようです</string>
+    <string name="incoming_call_not_spam">着信は迷惑電話ではないようです</string>
     <string name="notification_channel_name">Spam Call Blocker</string>
     <string name="notification_title_spam_blocked">着信をブロック済み: %1$s</string>
     <string name="number_copied_to_clipboard">電話番号をクリップボードにコピーしました</string>
     <!-- Call types -->
     <string name="call_incoming">着信</string>
     <string name="call_missed">不在着信</string>
-    <string name="call_rejected">通話拒否</string>
+    <string name="call_rejected">着信拒否</string>
     <string name="call_blocked">着信をブロック済み</string>
     <string name="call_unknown">不明</string>
     <!-- Preferences -->
@@ -36,7 +36,7 @@
     <string name="pref_category_unknown_phone_api">Unknownphone API 🌐</string>
     <string name="pref_category_tellows_api">Tellows API 🌐</string>
     <string name="pref_category_truecaller_api">Truecaller API 🌐</string>
-    <string name="pref_category_spam_filters">スパム電話番号のフィルタ</string>
+    <string name="pref_category_spam_filters">迷惑電話番号のフィルター</string>
     <string name="pref_category_pattern_blocking">パターンブロック</string>
     <string name="pref_category_pattern_whitelist">パターンホワイトリスト</string>
     <string name="pref_category_number_list">電話番号のリスト</string>
@@ -82,7 +82,7 @@
     <string name="pref_enable_blocking_summary">通話のブロック機能を有効化または無効化します</string>
     <!-- API Unknownphone -->
     <string name="pref_filter_lista_spam_title">Unknownphone API</string>
-    <string name="pref_filter_lista_spam_summary">(推奨) unknownphone.com API にリストされているスパムからの着信をブロックします</string>
+    <string name="pref_filter_lista_spam_summary">(推奨) unknownphone.com API にリストされている迷惑電話の着信をブロックします</string>
     <string name="pref_filter_lista_spam_api_language_title">unknownphone.com API の言語</string>
     <string name="pref_filter_lista_spam_api_language_summary">unknownphone.com API で検索する言語を選択してください (結果に影響)</string>
     <string name="pref_renew_api_key_title">API キーを更新</string>
@@ -95,12 +95,12 @@
     <string name="pref_update_dangerous_list_failure">危険な電話番号のリストの更新に失敗しました</string>
     <!-- API Tellows -->
     <string name="pref_filter_tellows_title">Tellows API</string>
-    <string name="pref_filter_tellows_summary">(推奨) Tellows API にリストされているスパムからの着信をブロックします</string>
+    <string name="pref_filter_tellows_summary">(推奨) Tellows API にリストされている迷惑電話の着信をブロックします</string>
     <string name="pref_filter_tellows_api_country_title">Tellows API の国</string>
     <string name="pref_filter_tellows_api_country_summary">Tellows API で検索する国を選択してください (結果に影響)</string>
     <!-- API Truecaller -->
     <string name="pref_filter_truecaller_title">Truecaller API</string>
-    <string name="pref_filter_truecaller_summary">(推奨) Truecaller API によって識別されたスパムからの着信をブロックします</string>
+    <string name="pref_filter_truecaller_summary">(推奨) Truecaller API によって識別された迷惑電話の着信をブロックします</string>
     <string name="pref_filter_truecaller_api_country_title">Truecaller API の国</string>
     <string name="pref_filter_truecaller_api_country_summary">Truecaller API で検索する国を選択してください (結果に影響)</string>
     <!-- Other Blocking Options -->
@@ -113,7 +113,7 @@
     <string name="pref_block_stir_shaken_risk_title">STIR/SHAKEN を確認する</string>
     <string name="pref_block_stir_shaken_risk_summary">STIR/SHAKEN システムによって不正の可能性があるとマークされた着信をブロックします (Android 11 以降のみ対応、一部の国とキャリアで利用可能)</string>
     <string name="pref_mute_instead_of_block_title">ブロックの代わりにミュートにする</string>
-    <string name="pref_mute_instead_of_block_summary">スパムからの着信を完全にブロックせずにミュートにします</string>
+    <string name="pref_mute_instead_of_block_summary">迷惑電話の着信を完全にブロックせずにミュートにします</string>
     <!-- Notifications -->
     <string name="pref_show_notification_title">ブロック時に通知を表示する</string>
     <string name="pref_show_notification_summary">着信がブロックされたときに通知を表示します</string>
@@ -133,7 +133,7 @@
     <string name="blocking_disabled">設定で着信のブロックが無効化されています</string>
     <string name="block_stir_shaken_risk">STIR/SHAKEN - なりすましの可能性がある着信</string>
     <string name="block_hidden_number">電話番号が非表示</string>
-    <string name="block_spam_number">スパムとして報告</string>
+    <string name="block_spam_number">迷惑電話として報告</string>
     <string name="block_international_call">国際電話</string>
     <string name="block_pattern_match">パターン一致</string>
     <string name="block_already_blocked_number">ブロック済みの電話番号</string>
@@ -152,12 +152,12 @@
     <string name="report_label">理由を説明してください</string>
     <string name="report_hint">簡単な説明</string>
     <string name="where_to_report">どこに報告しますか？</string>
-    <string name="report_spam">スパム</string>
-    <string name="report_not_spam">スパムではない</string>
+    <string name="report_spam">迷惑電話</string>
+    <string name="report_not_spam">迷惑電話ではない</string>
     <string name="accept">送信</string>
     <string name="cancel">キャンセル</string>
     <string name="report_validation_message">少なくとも 2 つの単語と 5 文字を含める必要があります。</string>
-    <string name="report_radio_validation">スパムかどうかを選択してください。</string>
+    <string name="report_radio_validation">迷惑電話かどうかを選択してください。</string>
     <string name="report_success_prefix">報告先</string>
     <string name="and">と</string>
     <string name="report_failure">報告を送信できませんでした</string>
